@@ -176,11 +176,6 @@ function handleEvents() {
 function update(dt) {
   if (run.state !== 'playing' || run.frozen) return;
   const g = run.game;
-  if (input.pressed('p') || input.pressed('escape')) {
-    run.state = 'paused';
-    showOverlay('JEDA', '<p>Arsip menunggumu. Tarik napas.</p>', 'Tekan P atau Enter untuk lanjut');
-    return;
-  }
   if (input.pressed('r')) { loadLevel(run.levelIndex); showToast('Level diulang'); return; }
   updateGame(g, input, dt, sfx);
   handleEvents();
@@ -296,7 +291,11 @@ refreshHud();
 
 window.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') advance();
-  if ((e.key === 'p' || e.key === 'P' || e.key === 'Escape') && run.state === 'paused') advance();
+  else if ((e.key === 'p' || e.key === 'P' || e.key === 'Escape') && run.state === 'paused') advance();
+  else if ((e.key === 'p' || e.key === 'P' || e.key === 'Escape') && run.state === 'playing') {
+    run.state = 'paused';
+    showOverlay('JEDA', '<p>Arsip menunggumu. Tarik napas.</p>', 'Tekan P atau Enter untuk lanjut');
+  }
   if (e.key === 'm' || e.key === 'M') { sfx.setMuted(!sfx.muted); if (run.state === 'playing') showToast(sfx.muted ? 'Suara mati' : 'Suara hidup'); }
   sfx.ensure();
 });
