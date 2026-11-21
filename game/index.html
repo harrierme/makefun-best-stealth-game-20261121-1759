@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Night Courier — Stealth di Arsip Senja</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #05070f; height: 100%; }
+  body {
+    font-family: "Segoe UI", system-ui, sans-serif;
+    color: #dbeafe;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 100vh; padding: 12px;
+  }
+  #wrap { position: relative; width: 1280px; max-width: 96vw; }
+  canvas {
+    display: block; width: 100%; height: auto;
+    background: #0b1020; border: 1px solid #26314d; border-radius: 6px;
+    cursor: crosshair;
+  }
+  #hud {
+    display: flex; gap: 18px; align-items: center; justify-content: space-between;
+    width: 100%; padding: 8px 4px; font-size: 14px; letter-spacing: 0.04em;
+    color: #9db4d8; user-select: none;
+  }
+  #hud b { color: #e8f1ff; font-weight: 600; }
+  #hud .alert { color: #f87171; font-weight: 700; }
+  #banner {
+    position: absolute; top: 64px; left: 50%; transform: translateX(-50%);
+    background: rgba(127, 29, 29, 0.92); color: #fee2e2; font-weight: 700;
+    font-size: 19px; letter-spacing: 0.14em; padding: 10px 22px; border-radius: 4px;
+    border: 1px solid #f87171; white-space: nowrap; z-index: 5;
+  }
+  #toast {
+    position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+    background: rgba(10, 18, 38, 0.92); color: #bfdbfe; font-size: 14px;
+    padding: 8px 16px; border-radius: 20px; border: 1px solid #334155;
+    white-space: nowrap; z-index: 5;
+  }
+  #overlay {
+    position: absolute; inset: 0; z-index: 10;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; background: rgba(4, 7, 17, 0.82); border-radius: 6px;
+    padding: 40px;
+  }
+  #overlay h1 {
+    font-size: 52px; letter-spacing: 0.18em; color: #5eead4;
+    text-shadow: 0 0 28px rgba(45, 212, 191, 0.55); margin-bottom: 14px;
+  }
+  #overlay p { font-size: 17px; line-height: 1.65; color: #c7d6ee; max-width: 640px; }
+  #overlay .tagline { font-size: 19px; color: #e8f1ff; font-style: italic; }
+  #overlay .keys { font-size: 14px; color: #8fa8cc; margin-top: 10px; }
+  #overlay-hint {
+    margin-top: 26px; font-size: 15px; color: #facc15; letter-spacing: 0.08em;
+    animation: blink 1.4s ease-in-out infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+  .hidden { display: none !important; }
+  #foot { margin-top: 8px; font-size: 12px; color: #5b6b8c; text-align: center; }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="hud">
+    <span id="hud-level"><b>Night Courier</b></span>
+    <span id="hud-files">Berkas 0/3</span>
+    <span id="hud-coins">Koin 3</span>
+    <span id="hud-attempts">Nyawa 3</span>
+    <span id="hud-timer">00:00</span>
+    <span id="hud-score">Skor 0</span>
+  </div>
+  <canvas id="game" width="1280" height="800"></canvas>
+  <div id="banner" class="hidden"></div>
+  <div id="toast" class="hidden"></div>
+  <div id="overlay" class="hidden">
+    <h1 id="overlay-title"></h1>
+    <div id="overlay-body"></div>
+    <div id="overlay-hint"></div>
+  </div>
+</div>
+<div id="foot">Night Courier — game stealth orisinal. WASD bergerak · Shift jongkok · klik lempar koin · P jeda · R ulangi level · M suara. Tanpa koneksi jaringan.</div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
